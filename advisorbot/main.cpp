@@ -1,14 +1,20 @@
-//
-//  main.cpp
-//  advisorbot
-//
-//  Created by 中村妃花理 on 2022/05/31.
-//
-
 #include <iostream>
+#include "AdvisorMain.hpp"
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+int main() {
+//    std::string name;
+//
+//    std::cout << "Please, enter your full name: ";
+//    std::getline (std::cin,name);
+//    std::cout << "Hello, " << name << "!\n";
+    AdvisorMain app{};
+    app.init();
+    
+//    Wallet wallet;
+//    wallet.insertCurrency("BTC", 10);
+//    wallet.insertCurrency("USDT", 100000);
+//    std::cout << wallet.toString() << std::endl;
+//    wallet.removeCurrency("USDT", 1000);
+//    std::cout << wallet.toString() << std::endl;
     return 0;
 }

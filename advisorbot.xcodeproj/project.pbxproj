@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		94C323242846284900ECC083 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94C323232846284900ECC083 /* main.cpp */; };
+		94C3232C284628A700ECC083 /* AdvisorMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94C3232A284628A700ECC083 /* AdvisorMain.cpp */; };
+		94C3232F2847508200ECC083 /* OrderBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94C3232D2847508200ECC083 /* OrderBook.cpp */; };
+		94C323322847514900ECC083 /* CSVReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94C323302847514900ECC083 /* CSVReader.cpp */; };
+		94C323352847518B00ECC083 /* OrderBookEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94C323332847518B00ECC083 /* OrderBookEntry.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +29,14 @@
 /* Begin PBXFileReference section */
 		94C323202846284900ECC083 /* advisorbot */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = advisorbot; sourceTree = BUILT_PRODUCTS_DIR; };
 		94C323232846284900ECC083 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		94C3232A284628A700ECC083 /* AdvisorMain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AdvisorMain.cpp; sourceTree = "<group>"; };
+		94C3232B284628A700ECC083 /* AdvisorMain.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AdvisorMain.hpp; sourceTree = "<group>"; };
+		94C3232D2847508200ECC083 /* OrderBook.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OrderBook.cpp; sourceTree = "<group>"; };
+		94C3232E2847508200ECC083 /* OrderBook.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OrderBook.hpp; sourceTree = "<group>"; };
+		94C323302847514900ECC083 /* CSVReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CSVReader.cpp; sourceTree = "<group>"; };
+		94C323312847514900ECC083 /* CSVReader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CSVReader.hpp; sourceTree = "<group>"; };
+		94C323332847518B00ECC083 /* OrderBookEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OrderBookEntry.cpp; sourceTree = "<group>"; };
+		94C323342847518B00ECC083 /* OrderBookEntry.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OrderBookEntry.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +70,14 @@
 			isa = PBXGroup;
 			children = (
 				94C323232846284900ECC083 /* main.cpp */,
+				94C3232A284628A700ECC083 /* AdvisorMain.cpp */,
+				94C3232B284628A700ECC083 /* AdvisorMain.hpp */,
+				94C3232D2847508200ECC083 /* OrderBook.cpp */,
+				94C3232E2847508200ECC083 /* OrderBook.hpp */,
+				94C323302847514900ECC083 /* CSVReader.cpp */,
+				94C323312847514900ECC083 /* CSVReader.hpp */,
+				94C323332847518B00ECC083 /* OrderBookEntry.cpp */,
+				94C323342847518B00ECC083 /* OrderBookEntry.hpp */,
 			);
 			path = advisorbot;
 			sourceTree = "<group>";
@@ -120,6 +140,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				94C323242846284900ECC083 /* main.cpp in Sources */,
+				94C323322847514900ECC083 /* CSVReader.cpp in Sources */,
+				94C3232C284628A700ECC083 /* AdvisorMain.cpp in Sources */,
+				94C3232F2847508200ECC083 /* OrderBook.cpp in Sources */,
+				94C323352847518B00ECC083 /* OrderBookEntry.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
