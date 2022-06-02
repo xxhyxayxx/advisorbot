@@ -17,10 +17,17 @@ class AdvisorMain{
         void printMenu();
         void printHelp();
         void printProd();
+        void printMin();
+        void printMax();
+        void printAvg();
         string getUserOption();
         void processUserOption(string userOption);
+        string currentTime;
+        double highPrice;
+        double lowPrice;
+        double avgPrice;
     
-        OrderBook orderBook{"/Users/nakamurahigeri/Downloads/20200317.csv"};
+        OrderBook orderBook{"/Users/nakamurahigeri/Documents/advisorbot/advisorbot/test.csv"};
 };
 
 #endif /* AdvisorMain_hpp */

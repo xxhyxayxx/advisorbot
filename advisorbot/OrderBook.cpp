@@ -52,6 +52,18 @@ double OrderBook::getLowPrice(std::vector<OrderBookEntry>& orders){
     return min;
 }
 
+double OrderBook::getAvg(std::vector<OrderBookEntry>& orders){
+    double price = orders[0].price;
+    double avg = 0;
+    int length = 0;
+    for(OrderBookEntry& e : orders){
+        price += e.price;
+        length++;
+    }
+    avg = price / length;
+    return avg;
+}
+
 std::string OrderBook::getEarliestTime(){
         return orders[0].timestamp;
 }
