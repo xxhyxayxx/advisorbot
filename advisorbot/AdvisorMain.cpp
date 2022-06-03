@@ -91,16 +91,26 @@ void AdvisorMain::printMax(){
 }
 
 void AdvisorMain::printAvg(){
-    cout << "avg - enter the amount: avg product ask/bid, eg avg ETH/BTC ask " << endl;
+    cout << "avg - enter the amount: avg product ask/bid number of timesteps, eg avg ETH/BTC ask 10" << endl;
     string input;
     getline(cin, input);
     
     vector<string> tokens = CSVReader::tokenise(input, ' ');
     
     vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[2]), tokens[1], currentTime);
-    avgPrice = OrderBook::getAvg(entries);
     
-    cout << "The average " << tokens[2] << " for " << tokens[1] << " is " << avgPrice << endl;
+    avgPrice = OrderBook::getAvg(entries, stoi(tokens[3]));
+    
+    cout << "The average " << tokens[1] << " " << tokens[2] << " price over the last " << tokens[3] << " timesteps was " << avgPrice << endl;
+}
+
+void AdvisorMain::printTime(){
+    cout << currentTime << endl;
+}
+
+void AdvisorMain::printStep(){
+    currentTime = orderBook.getNextTime(currentTime);
+    cout << "now at " << currentTime << endl;
 }
 
 string AdvisorMain::getUserOption(){
@@ -136,5 +146,11 @@ void AdvisorMain::processUserOption(string userOption){
     }
     if(userOption == "avg"){
         printAvg();
+    }
+    if(userOption == "time"){
+        printTime();
+    }
+    if(userOption == "step"){
+        printStep();
     }
 }

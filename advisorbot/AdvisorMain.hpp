@@ -20,6 +20,8 @@ class AdvisorMain{
         void printMin();
         void printMax();
         void printAvg();
+        void printTime();
+        void printStep();
         string getUserOption();
         void processUserOption(string userOption);
         string currentTime;

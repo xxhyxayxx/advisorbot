@@ -1,6 +1,7 @@
 #include "OrderBook.hpp"
 #include "CSVReader.hpp"
 #include <map>
+#include <iostream>
 
 using namespace std;
 
@@ -52,15 +53,18 @@ double OrderBook::getLowPrice(std::vector<OrderBookEntry>& orders){
     return min;
 }
 
-double OrderBook::getAvg(std::vector<OrderBookEntry>& orders){
-    double price = orders[0].price;
+double OrderBook::getAvg(std::vector<OrderBookEntry>& orders, int num){
+    double price = 0;
     double avg = 0;
     int length = 0;
     for(OrderBookEntry& e : orders){
         price += e.price;
         length++;
+        if(length == num){
+            break;
+        }
     }
-    avg = price / length;
+    avg = price / num;
     return avg;
 }
 
@@ -72,6 +76,7 @@ std::string OrderBook::getNextTime(std::string timestamp){
     std::string next_timestamp = "";
     for(OrderBookEntry& e: orders){
         if(e.timestamp > timestamp){
+            cout << e.timestamp << endl;
             next_timestamp = e.timestamp;
             break;
         }
