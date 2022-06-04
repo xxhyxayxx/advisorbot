@@ -113,6 +113,39 @@ void AdvisorMain::printStep(){
     cout << "now at " << currentTime << endl;
 }
 
+void AdvisorMain::printPredict(){
+    cout << "predict - enter the amount: predict max/min price product ask/bid, eg predict max ETH/BTC bid" << endl;
+    string input;
+    getline(cin, input);
+    
+    vector<string> tokens = CSVReader::tokenise(input, ' ');
+    
+//    for(string& e : tokens){
+//        cout << e << endl;
+//    }
+//
+//    cout << tokens[1] << endl;
+    
+    vector<double> list;
+    int num = 3;
+    string time = currentTime;
+    
+    for (int i = 0; i < num; i++) {
+        vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[3]), tokens[2], time);
+        if(tokens[1] == "max"){
+            list.push_back(OrderBook::getHighPrice(entries));
+        }else if(tokens[1] == "min"){
+            list.push_back(OrderBook::getLowPrice(entries));
+        }
+        time = orderBook.getNextTime(time);
+        cout << list[i] << endl;
+    };
+    
+    double predValue = orderBook.getPredict(list, num);
+
+    cout << "The predict " << tokens[1] << " " << tokens[2] << " " << tokens[3] << " is " << predValue << endl;
+}
+
 string AdvisorMain::getUserOption(){
     
     string userOption;
@@ -152,5 +185,8 @@ void AdvisorMain::processUserOption(string userOption){
     }
     if(userOption == "step"){
         printStep();
+    }
+    if(userOption == "predict"){
+        printPredict();
     }
 }

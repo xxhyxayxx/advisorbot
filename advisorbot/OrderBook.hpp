@@ -31,10 +31,12 @@ class OrderBook{
         static double getHighPrice(vector<OrderBookEntry>& orders);
         static double getLowPrice(vector<OrderBookEntry>& orders);
         static double getAvg(vector<OrderBookEntry>& orders, int num);
+        static double getPredict(vector<double>& list, int num);
         double getSpread(double highPrice, double lowPrice);
     
     private:
         vector<OrderBookEntry> orders;
+        vector<double> list;
     
     
 };

@@ -68,6 +68,24 @@ double OrderBook::getAvg(std::vector<OrderBookEntry>& orders, int num){
     return avg;
 }
 
+double OrderBook::getPredict(std::vector<double>& list, int num)
+{
+    double price = 0;
+    double avg = 0;
+    int length = 0;
+    for(double& e : list){
+        price += e;
+        length++;
+        if(length == num){
+            break;
+        }
+    }
+    avg = price / num;
+    return avg;
+}
+
+
+
 std::string OrderBook::getEarliestTime(){
         return orders[0].timestamp;
 }

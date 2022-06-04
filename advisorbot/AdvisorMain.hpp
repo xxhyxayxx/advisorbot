@@ -22,12 +22,14 @@ class AdvisorMain{
         void printAvg();
         void printTime();
         void printStep();
+        void printPredict();
         string getUserOption();
         void processUserOption(string userOption);
         string currentTime;
         double highPrice;
         double lowPrice;
         double avgPrice;
+        double predHighPrice;
     
         OrderBook orderBook{"/Users/nakamurahigeri/Documents/advisorbot/advisorbot/test.csv"};
 };
