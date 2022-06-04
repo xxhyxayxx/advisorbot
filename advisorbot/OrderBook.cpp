@@ -106,10 +106,10 @@ std::string OrderBook::getNextTime(std::string timestamp){
     return next_timestamp;
 }
 
-double OrderBook::getSpread(double highPrice, double lowPrice) {
+double OrderBook::getSpread(double askPrice, double bidPrice) {
     double spread;
     
-    spread = lowPrice - highPrice;
+    spread = askPrice - bidPrice;
 
     return spread;
 }

@@ -23,6 +23,7 @@ class AdvisorMain{
         void printTime();
         void printStep();
         void printPredict();
+        void printSpread();
         string getUserOption();
         void processUserOption(string userOption);
         string currentTime;
@@ -30,8 +31,10 @@ class AdvisorMain{
         double lowPrice;
         double avgPrice;
         double predHighPrice;
+        double spreadPrice;
     
-        OrderBook orderBook{"/Users/nakamurahigeri/Documents/advisorbot/advisorbot/test.csv"};
+        //OrderBook orderBook{"/Users/nakamurahigeri/Documents/advisorbot/advisorbot/test.csv"};
+        OrderBook orderBook{"/Users/nakamurahigeri/Downloads/20200601.csv"};
 };
 
 #endif /* AdvisorMain_hpp */

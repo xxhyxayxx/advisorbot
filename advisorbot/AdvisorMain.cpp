@@ -146,6 +146,21 @@ void AdvisorMain::printPredict(){
     cout << "The predict " << tokens[1] << " " << tokens[2] << " " << tokens[3] << " is " << predValue << endl;
 }
 
+void AdvisorMain::printSpread(){
+    cout << "spread - enter the amount: spread product, eg spread ETH/BTC" << endl;
+    string input;
+    getline(cin, input);
+    
+    vector<string> tokens = CSVReader::tokenise(input, ' ');
+    
+    vector<OrderBookEntry> entriesAsk = orderBook.getOrders(OrderBookEntry::stringToOrderBookType("ask"), tokens[1], currentTime);
+    vector<OrderBookEntry> entriesBid = orderBook.getOrders(OrderBookEntry::stringToOrderBookType("bid"), tokens[1], currentTime);
+    
+    spreadPrice = orderBook.getSpread(OrderBook::getLowPrice(entriesAsk), OrderBook::getHighPrice(entriesBid)) * 100;
+    
+    cout << "The spread " << tokens[1]  << " is " << spreadPrice << "% " << endl;
+}
+
 string AdvisorMain::getUserOption(){
     
     string userOption;
@@ -188,5 +203,8 @@ void AdvisorMain::processUserOption(string userOption){
     }
     if(userOption == "predict"){
         printPredict();
+    }
+    if(userOption == "spread"){
+        printSpread();
     }
 }
