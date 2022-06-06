@@ -10,6 +10,9 @@ int main() {
     AdvisorMain app{};
     app.init();
     
+    //CSVReader csv;
+    //csv.readCSV2();
+    
 //    Wallet wallet;
 //    wallet.insertCurrency("BTC", 10);
 //    wallet.insertCurrency("USDT", 100000);

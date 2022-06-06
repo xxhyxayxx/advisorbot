@@ -28,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		9439E22E28488EBF00BD8E3D /* test.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.csv; sourceTree = "<group>"; };
+		9482411A284DE76900E9C8CE /* data.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = data.csv; sourceTree = "<group>"; };
 		94C323202846284900ECC083 /* advisorbot */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = advisorbot; sourceTree = BUILT_PRODUCTS_DIR; };
 		94C323232846284900ECC083 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		94C3232A284628A700ECC083 /* AdvisorMain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AdvisorMain.cpp; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 				94C323332847518B00ECC083 /* OrderBookEntry.cpp */,
 				94C323342847518B00ECC083 /* OrderBookEntry.hpp */,
 				9439E22E28488EBF00BD8E3D /* test.csv */,
+				9482411A284DE76900E9C8CE /* data.csv */,
 			);
 			path = advisorbot;
 			sourceTree = "<group>";

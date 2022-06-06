@@ -5,10 +5,9 @@
 
 using namespace std;
 
-
 /** construct, reading a csv data file**/
 OrderBook::OrderBook(string filename){
-    orders = CSVReader::readCSV(filename);
+    orders = CSVReader::readCSV2();
 }
 /**return  vector of all know products in the dataset*/
 vector<string> OrderBook::getKnownProducts(){
