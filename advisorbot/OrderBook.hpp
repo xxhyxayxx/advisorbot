@@ -23,10 +23,6 @@ class OrderBook{
         string getEarliestTime();
         /**return the next time after the sent time in the order book. If there is no next timestamp, wraps around to the start*/
         string getNextTime(string timestamp);
-    
-        void insertOrder(OrderBookEntry& order);
-    
-        vector<OrderBookEntry> matchAsksToBids(string product, string timestamp);
         
         static double getHighPrice(vector<OrderBookEntry>& orders);
         static double getLowPrice(vector<OrderBookEntry>& orders);
