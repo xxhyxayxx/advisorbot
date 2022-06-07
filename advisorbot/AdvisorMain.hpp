@@ -26,6 +26,10 @@ class AdvisorMain{
         void printSpread();
         string getUserOption();
         void processUserOption(string userOption);
+        bool valMenu(const string& menu);
+        bool valProd(const string& prod);
+        bool valType(const string& type);
+        bool isNumber(const string& str);
         string currentTime;
         double highPrice;
         double lowPrice;

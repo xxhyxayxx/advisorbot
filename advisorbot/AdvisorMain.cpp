@@ -35,10 +35,9 @@ void AdvisorMain::printHelp(){
 }
 
 void AdvisorMain::printProd(){
-    vector<string> products = orderBook.getKnownProducts();
-    
-    for(int i=0; i < products.size(); i++)
-       cout << products.at(i) << endl;
+    vector<string> prod = orderBook.getKnownProducts();
+    for(string& e : prod)
+       cout << e << endl;
 }
 
 void AdvisorMain::printMin(){
@@ -48,10 +47,15 @@ void AdvisorMain::printMin(){
     
     vector<string> tokens = CSVReader::tokenise(input, ' ');
     
-    vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[2]), tokens[1], currentTime);
-    lowPrice = OrderBook::getLowPrice(entries);
+    if(tokens.size() == 3 && tokens[0] == "min" && valProd(tokens[1]) && valType(tokens[2])){
+        vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[2]), tokens[1], currentTime);
+        lowPrice = OrderBook::getLowPrice(entries);
     
-    cout << "The min " << tokens[2] << " for " << tokens[1] << " is " << lowPrice << endl;
+        cout << "The min " << tokens[2] << " for " << tokens[1] << " is " << lowPrice << endl;
+    }else{
+        cout << "Bad Input" << endl;
+    }
+
 }
 
 void AdvisorMain::printMax(){
@@ -61,10 +65,15 @@ void AdvisorMain::printMax(){
     
     vector<string> tokens = CSVReader::tokenise(input, ' ');
     
-    vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[2]), tokens[1], currentTime);
-    highPrice = OrderBook::getHighPrice(entries);
+    if(tokens.size() == 3 && tokens[0] == "max" && valProd(tokens[1]) && valType(tokens[2])){
+        vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[2]), tokens[1], currentTime);
+        highPrice = OrderBook::getHighPrice(entries);
+        
+        cout << "The max " << tokens[2] << " for " << tokens[1] << " is " << highPrice << endl;
+    }else{
+        cout << "Bad Input" << endl;
+    }
     
-    cout << "The max " << tokens[2] << " for " << tokens[1] << " is " << highPrice << endl;
 }
 
 void AdvisorMain::printAvg(){
@@ -74,11 +83,15 @@ void AdvisorMain::printAvg(){
     
     vector<string> tokens = CSVReader::tokenise(input, ' ');
     
-    vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[2]), tokens[1], currentTime);
-    
-    avgPrice = OrderBook::getAvg(entries, stoi(tokens[3]));
-    
-    cout << "The average " << tokens[1] << " " << tokens[2] << " price over the last " << tokens[3] << " timesteps was " << avgPrice << endl;
+    if(tokens.size() == 4 && tokens[0] == "avg" && valProd(tokens[1]) && valType(tokens[2]) && isNumber(tokens[3])){
+        vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[2]), tokens[1], currentTime);
+        
+        avgPrice = OrderBook::getAvg(entries, stoi(tokens[3]));
+        
+        cout << "The average " << tokens[1] << " " << tokens[2] << " price over the last " << tokens[3] << " timesteps was " << avgPrice << endl;
+    }else{
+        cout << "Bad Input" << endl;
+    }
 }
 
 void AdvisorMain::printTime(){
@@ -96,12 +109,6 @@ void AdvisorMain::printPredict(){
     getline(cin, input);
     
     vector<string> tokens = CSVReader::tokenise(input, ' ');
-    
-//    for(string& e : tokens){
-//        cout << e << endl;
-//    }
-//
-//    cout << tokens[1] << endl;
     
     vector<double> list;
     int num = 3;
@@ -142,7 +149,7 @@ string AdvisorMain::getUserOption(){
     string userOption;
     string line;
     
-    std::getline(std::cin, line);
+    getline(cin, line);
     userOption = line;
     
     return userOption;
@@ -176,4 +183,54 @@ void AdvisorMain::processUserOption(string userOption){
     if(userOption == "spread"){
         printSpread();
     }
+    if(!valMenu(userOption)){
+        cout << "Bad Input" << endl;
+    }
 }
+
+bool AdvisorMain::valMenu(const string& menu){
+    vector<string> menuList{"help", "prod", "min", "max", "avg", "time", "step", "predict", "spread"};
+    
+    bool val = false;
+    
+    for(string& e : menuList){
+        if(menu == e){
+            val = true;
+        }
+    }
+    
+    return val;
+}
+
+bool AdvisorMain::valProd(const string& prod){
+    bool val = false;
+    
+    vector<string> prod_token = orderBook.getKnownProducts();
+    
+    for(string& e : prod_token){
+        if(e == prod){
+            val = true;
+        }
+    }
+    
+    return val;
+}
+
+bool AdvisorMain::valType(const string& type){
+    bool val = false;
+    
+    if(type == "ask" || type == "bid"){
+        val = true;
+    }
+    
+    return val;
+}
+
+bool AdvisorMain::isNumber(const string& str){
+    for (char const &c : str) {
+        if (isdigit(c) == 0) return false;
+    }
+    return true;
+}
+
+
