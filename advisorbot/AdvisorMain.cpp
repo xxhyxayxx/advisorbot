@@ -10,7 +10,6 @@ AdvisorMain::AdvisorMain(){
 void AdvisorMain::init(){
     string input;
     currentTime = orderBook.getEarliestTime(); //return orders[0].timestamp
-//    wallet.insertCurrency("BTC", 10); //deposit 10 BTC in Wallet
     
     while(true){
         printMenu();
@@ -22,28 +21,6 @@ void AdvisorMain::init(){
 
 void AdvisorMain::printMenu(){
     cout << "Please enter a command, or help for a list of commands " << endl;
-    
-//    //1 print help
-//    std::cout << "1: Print help " << std::endl;
-//
-//    //2 print exchange stats
-//    std::cout << "2: Print exchange stats " << std::endl;
-//
-//    //3 make an offer
-//    std::cout << "3: Make an offer " << std::endl;
-//
-//    //4 make a bid
-//    std::cout << "4: Make a bid " << std::endl;
-//
-//    //5 print wallet
-//    std::cout << "5: Print wallet " << std::endl;
-//
-//    //6 continue
-//    std::cout << "6: Continue " << std::endl;
-//
-//    std::cout << "================" << std::endl;
-    
-//    std::cout << "Current Time is : " << currentTime << std::endl;
 }
 
 void AdvisorMain::printHelp(){
@@ -162,19 +139,11 @@ void AdvisorMain::printSpread(){
 }
 
 string AdvisorMain::getUserOption(){
-    
     string userOption;
     string line;
     
-//    cout << "Type commands " << std::endl;
     std::getline(std::cin, line);
     userOption = line;
-//    try{
-//        userOption = std::stoi(line);
-//    }catch(const std::exception& e){
-//
-//    }
-//    std::cout << "You chose: " << userOption << std::endl;
     
     return userOption;
 }

@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string>
 
+using namespace std;
+
 enum class OrderBookType{bid, ask, unknown, asksale, bidsale};
 
 class OrderBookEntry{
@@ -13,12 +15,12 @@ class OrderBookEntry{
     
         OrderBookEntry(double _price,
                        double _amount,
-                       std::string _timestamp,
-                       std::string _product,
+                       string _timestamp,
+                       string _product,
                        OrderBookType _orderType,
-                       std::string _username = "dataset");
+                       string _username = "dataset");
     
-        static OrderBookType stringToOrderBookType(std::string s);
+        static OrderBookType stringToOrderBookType(string s);
     
         static bool compareByTimestamp(OrderBookEntry& e1, OrderBookEntry& e2){
             return e1.timestamp < e2.timestamp;
@@ -35,10 +37,10 @@ class OrderBookEntry{
     
         double price;
         double amount;
-        std::string timestamp;
-        std::string product;
+        string timestamp;
+        string product;
         OrderBookType orderType;
-        std::string username;
+        string username;
     
 };
 

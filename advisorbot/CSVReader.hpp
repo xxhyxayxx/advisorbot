@@ -7,18 +7,19 @@
 
 #include <stdio.h>
 
+using namespace std;
+
 class CSVReader{
     public:
         CSVReader();
-    
-        static std::vector<OrderBookEntry> readCSV(std::string csvFile);
-        static std::vector<OrderBookEntry> readCSV2();
-        static std::vector<std::string> tokenise(std::string csvLine, char separator);
-        static OrderBookEntry stringsToOBE(std::string priceString, std::string amountString, std::string timestamp, std::string product, OrderBookType orderType);
-        static double getLowPrice(std::vector<OrderBookEntry>& orders);
+
+        static vector<OrderBookEntry> readCSV2();
+        static vector<std::string> tokenise(string csvLine, char separator);
+        static OrderBookEntry stringsToOBE(string priceString, string amountString, string timestamp, string product, OrderBookType orderType);
+        static double getLowPrice(vector<OrderBookEntry>& orders);
     
     private:
-        static OrderBookEntry stringsToOBE(std::vector<std::string> strings);
+        static OrderBookEntry stringsToOBE(vector<string> strings);
     
         
     

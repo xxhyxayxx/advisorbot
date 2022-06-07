@@ -1,11 +1,13 @@
 #include "OrderBookEntry.hpp"
 
+using namespace std;
+
 OrderBookEntry::OrderBookEntry(double _price,
                double _amount,
-               std::string _timestamp,
-               std::string _product,
+               string _timestamp,
+               string _product,
                OrderBookType _orderType,
-               std::string _username)
+               string _username)
 : price(_price),
   amount(_amount),
   timestamp(_timestamp),
@@ -16,7 +18,7 @@ OrderBookEntry::OrderBookEntry(double _price,
     
 }
 
-OrderBookType  OrderBookEntry::stringToOrderBookType(std::string s){
+OrderBookType  OrderBookEntry::stringToOrderBookType(string s){
     if(s == "ask"){
         return OrderBookType::ask;
     }
