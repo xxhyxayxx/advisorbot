@@ -1,5 +1,6 @@
 #include "AdvisorMain.hpp"
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ void AdvisorMain::init(){
     while(true){
         printMenu();
         input = getUserOption();
-        processUserOption(input);//change display contents according to input
+        processUserOption(input); //change display contents according to input
     }
 }
 
@@ -24,12 +25,37 @@ void AdvisorMain::printMenu(){
 }
 
 void AdvisorMain::printHelp(){
-    cout << "The available commands are help, help <cmd>, avg, time, (etc. list all commands)" << endl;
+    cout << "The available commands are help, help <cmd>, prod, min, max, avg, time, step, predict, spread (etc. list all commands)" << endl;
     
     string helpInput;
     helpInput = getUserOption();
+    
+    vector<string> tokens = CSVReader::tokenise(helpInput, ' ');
+    
+    
     if(helpInput == "help avg"){
         cout << "avg ETH/BTC bid 10 -> average ETH/BTC bid over last 10 time steps" << endl;
+    }
+    if(helpInput == "help prod"){
+        cout << "print all products that you can manage" << endl;
+    }
+    if(helpInput == "help min"){
+        cout << "min ETH/BTC ask -> minimum ETH/BTC ask at the current time" << endl;
+    }
+    if(helpInput == "help max"){
+        cout << "mxn ETH/BTC ask -> max ETH/BTC ask at the current time" << endl;
+    }
+    if(helpInput == "help time"){
+        cout << "print current timestamp" << endl;
+    }
+    if(helpInput == "help step"){
+        cout << "move and print next timestamp" << endl;
+    }
+    if(helpInput == "help predict"){
+        cout << "predict max ETH/BTC bid" << endl;
+    }
+    if(helpInput == "help spread"){
+        cout << "spread ETH/BTC" << endl;
     }
 
 }
@@ -49,13 +75,13 @@ void AdvisorMain::printMin(){
     
     if(tokens.size() == 3 && tokens[0] == "min" && valProd(tokens[1]) && valType(tokens[2])){
         vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[2]), tokens[1], currentTime);
+        
         lowPrice = OrderBook::getLowPrice(entries);
-    
-        cout << "The min " << tokens[2] << " for " << tokens[1] << " is " << lowPrice << endl;
+        cout << "The min " << tokens[2] << " for " << tokens[1] << " is " << fixed << setprecision(8) << lowPrice << endl;
+
     }else{
         cout << "Bad Input" << endl;
     }
-
 }
 
 void AdvisorMain::printMax(){
@@ -69,11 +95,10 @@ void AdvisorMain::printMax(){
         vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[2]), tokens[1], currentTime);
         highPrice = OrderBook::getHighPrice(entries);
         
-        cout << "The max " << tokens[2] << " for " << tokens[1] << " is " << highPrice << endl;
+        cout << "The max " << tokens[2] << " for " << tokens[1] << " is " << fixed << setprecision(8) << highPrice << endl;
     }else{
         cout << "Bad Input" << endl;
     }
-    
 }
 
 void AdvisorMain::printAvg(){
@@ -88,7 +113,7 @@ void AdvisorMain::printAvg(){
         
         avgPrice = OrderBook::getAvg(entries, stoi(tokens[3]));
         
-        cout << "The average " << tokens[1] << " " << tokens[2] << " price over the last " << tokens[3] << " timesteps was " << avgPrice << endl;
+        cout << "The average " << tokens[1] << " " << tokens[2] << " price over the last " << tokens[3] << " timesteps was " << fixed << setprecision(8) << avgPrice << endl;
     }else{
         cout << "Bad Input" << endl;
     }
@@ -114,20 +139,25 @@ void AdvisorMain::printPredict(){
     int num = 3;
     string time = currentTime;
     
-    for (int i = 0; i < num; i++) {
-        vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[3]), tokens[2], time);
-        if(tokens[1] == "max"){
-            list.push_back(OrderBook::getHighPrice(entries));
-        }else if(tokens[1] == "min"){
-            list.push_back(OrderBook::getLowPrice(entries));
-        }
-        time = orderBook.getNextTime(time);
-        cout << list[i] << endl;
-    };
     
-    double predValue = orderBook.getPredict(list, num);
+    if(tokens.size() == 4 && tokens[0] == "predict" && (tokens[1] == "min" || tokens[1] == "max") && valProd(tokens[2]) && valType(tokens[3])){
+        for (int i = 0; i < num; i++) {
+            vector<OrderBookEntry> entries = orderBook.getOrders(OrderBookEntry::stringToOrderBookType(tokens[3]), tokens[2], time);
+            if(tokens[1] == "max"){
+                list.push_back(OrderBook::getHighPrice(entries));
+            }else if(tokens[1] == "min"){
+                list.push_back(OrderBook::getLowPrice(entries));
+            }
+            time = orderBook.getNextTime(time);
+            cout << list[i] << endl;
+        };
+        
+        double predValue = orderBook.getPredict(list, num);
 
-    cout << "The predict " << tokens[1] << " " << tokens[2] << " " << tokens[3] << " is " << predValue << endl;
+        cout << "The predict " << tokens[1] << " " << tokens[2] << " " << tokens[3] << " is " << predValue << endl;
+    }else{
+        cout << "Bad Input" << endl;
+    }
 }
 
 void AdvisorMain::printSpread(){
@@ -137,12 +167,16 @@ void AdvisorMain::printSpread(){
     
     vector<string> tokens = CSVReader::tokenise(input, ' ');
     
-    vector<OrderBookEntry> entriesAsk = orderBook.getOrders(OrderBookEntry::stringToOrderBookType("ask"), tokens[1], currentTime);
-    vector<OrderBookEntry> entriesBid = orderBook.getOrders(OrderBookEntry::stringToOrderBookType("bid"), tokens[1], currentTime);
-    
-    spreadPrice = orderBook.getSpread(OrderBook::getLowPrice(entriesAsk), OrderBook::getHighPrice(entriesBid)) * 100;
-    
-    cout << "The spread " << tokens[1]  << " is " << spreadPrice << "% " << endl;
+    if(tokens.size() == 2 && tokens[0] == "spread" && valProd(tokens[1])){
+        vector<OrderBookEntry> entriesAsk = orderBook.getOrders(OrderBookEntry::stringToOrderBookType("ask"), tokens[1], currentTime);
+        vector<OrderBookEntry> entriesBid = orderBook.getOrders(OrderBookEntry::stringToOrderBookType("bid"), tokens[1], currentTime);
+        
+        spreadPrice = orderBook.getSpread(OrderBook::getLowPrice(entriesAsk), OrderBook::getHighPrice(entriesBid)) * 100;
+        
+        cout << "The spread " << tokens[1]  << " is " << spreadPrice << "% " << endl;
+    }else{
+        cout << "Bad Input" << endl;
+    }
 }
 
 string AdvisorMain::getUserOption(){
@@ -156,6 +190,7 @@ string AdvisorMain::getUserOption(){
 }
 
 void AdvisorMain::processUserOption(string userOption){
+
     if(userOption == "help"){
         printHelp();
     }
