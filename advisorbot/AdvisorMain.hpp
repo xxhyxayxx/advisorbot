@@ -37,8 +37,10 @@ class AdvisorMain{
         double predHighPrice;
         double spreadPrice;
     
+        vector<OrderBookEntry> entries;
+    
         //OrderBook orderBook{"/Users/nakamurahigeri/Documents/advisorbot/advisorbot/test.csv"};
-        OrderBook orderBook{"/Users/nakamurahigeri/Downloads/20200601.csv"};
+        OrderBook orderBook{};
 };
 
 #endif /* AdvisorMain_hpp */
