@@ -36,50 +36,45 @@ vector<OrderBookEntry> OrderBook::getOrders(OrderBookType type, string product, 
     return orders_sub;
 }
 
-double OrderBook::getHighPrice(vector<OrderBookEntry>& orders){
-    double max = orders[0].price;
+vector<OrderBookEntry> OrderBook::getOrdersCurrentTime(string timestamp){
+
+    vector<OrderBookEntry> orders_sub;
+    
     for(OrderBookEntry& e : orders){
-        if(e.price > max) max = e.price;
+        if(e.timestamp == timestamp){
+            orders_sub.push_back(e);
+        }
+    }
+    
+    return orders_sub;
+}
+
+double OrderBook::getHighPrice(vector<double>& list){
+    double max = list[0];
+    for(double& e : list){
+        if(e > max) max = e;
     }
     return max;
 }
 
-double OrderBook::getLowPrice(vector<OrderBookEntry>& orders){
-    double min = orders[0].price;
-    for(OrderBookEntry& e : orders){
-        if(e.price < min) min = e.price;
+double OrderBook::getLowPrice(vector<double>& list){
+    double min = list[0];
+    for(double& e : list){
+        if(e < min) min = e;
     }
     return min;
 }
 
-double OrderBook::getAvg(vector<OrderBookEntry>& orders, int num){
+double OrderBook::getAvg(vector<double>& list){
     double price = 0;
     double avg = 0;
-    int length = 0;
-    for(OrderBookEntry& e : orders){
-        price += e.price;
-        length++;
-        if(length == num){
-            break;
-        }
-    }
-    avg = price / num;
-    return avg;
-}
-
-double OrderBook::getPredict(vector<double>& list, int num)
-{
-    double price = 0;
-    double avg = 0;
-    int length = 0;
+    int counter = 0;
     for(double& e : list){
         price += e;
-        length++;
-        if(length == num){
-            break;
-        }
+        counter++;
     }
-    avg = price / num;
+    
+    avg = price / counter;
     return avg;
 }
 
@@ -91,7 +86,6 @@ string OrderBook::getNextTime(string timestamp){
     string next_timestamp = "";
     for(OrderBookEntry& e: orders){
         if(e.timestamp > timestamp){
-            cout << e.timestamp << endl;
             next_timestamp = e.timestamp;
             break;
         }

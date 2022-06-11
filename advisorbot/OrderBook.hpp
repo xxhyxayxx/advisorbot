@@ -18,16 +18,16 @@ class OrderBook{
         vector<string> getKnownProducts();
         /**return vector of Orders according to the sent filters*/
         vector<OrderBookEntry> getOrders(OrderBookType type, string product, string timestamp);
+        vector<OrderBookEntry> getOrdersCurrentTime(string timestamp);
         
         /**return the earliest time in the orderbook*/
         string getEarliestTime();
         /**return the next time after the sent time in the order book. If there is no next timestamp, wraps around to the start*/
         string getNextTime(string timestamp);
         
-        static double getHighPrice(vector<OrderBookEntry>& orders);
-        static double getLowPrice(vector<OrderBookEntry>& orders);
-        static double getAvg(vector<OrderBookEntry>& orders, int num);
-        static double getPredict(vector<double>& list, int num);
+        static double getHighPrice(vector<double>& list);
+        static double getLowPrice(vector<double>& list);
+        static double getAvg(vector<double>& list);
         double getSpread(double askPrice, double bidPrice);
     
     private:
