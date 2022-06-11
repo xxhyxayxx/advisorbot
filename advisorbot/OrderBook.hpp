@@ -17,7 +17,6 @@ class OrderBook{
         /**return  vector of all know products in the dataset*/
         vector<string> getKnownProducts();
         /**return vector of Orders according to the sent filters*/
-        vector<OrderBookEntry> getOrders(OrderBookType type, string product, string timestamp);
         vector<OrderBookEntry> getOrdersCurrentTime(string timestamp);
         
         /**return the earliest time in the orderbook*/

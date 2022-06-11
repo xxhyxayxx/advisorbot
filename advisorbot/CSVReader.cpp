@@ -28,6 +28,7 @@ vector<OrderBookEntry> CSVReader::readCSV(){
             }
         }
         
+        fclose(fp);
     }
     
     cout << "CSVReader::readCSV read " << entries.size() << "entries" << endl;
