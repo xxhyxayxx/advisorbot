@@ -82,7 +82,6 @@ void AdvisorMain::printMin(){
         vector<double> priceList;
         
         for(OrderBookEntry& e : entries){
-            cout << e.timestamp << endl;
             if(e.orderType == OrderBookEntry::stringToOrderBookType(tokens[2]) && e.product == tokens[1]){
                 priceList.push_back(e.price);
             }
@@ -107,7 +106,6 @@ void AdvisorMain::printMax(){
         vector<double> priceList;
         
         for(OrderBookEntry& e : entries){
-            cout << e.timestamp << endl;
             if(e.orderType == OrderBookEntry::stringToOrderBookType(tokens[2]) && e.product == tokens[1]){
                 priceList.push_back(e.price);
             }

@@ -13,7 +13,7 @@ using namespace std;
 class OrderBook{
     public:
         /** construct, reading a csv data file**/
-        OrderBook(string filename);
+        OrderBook();
         /**return  vector of all know products in the dataset*/
         vector<string> getKnownProducts();
         /**return vector of Orders according to the sent filters*/

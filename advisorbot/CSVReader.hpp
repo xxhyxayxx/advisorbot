@@ -13,7 +13,7 @@ class CSVReader{
     public:
         CSVReader();
 
-        static vector<OrderBookEntry> readCSV2();
+        static vector<OrderBookEntry> readCSV();
         static vector<std::string> tokenise(string csvLine, char separator);
         static OrderBookEntry stringsToOBE(string priceString, string amountString, string timestamp, string product, OrderBookType orderType);
         static double getLowPrice(vector<OrderBookEntry>& orders);

@@ -6,8 +6,8 @@
 using namespace std;
 
 /** construct, reading a csv data file**/
-OrderBook::OrderBook(string filename){
-    orders = CSVReader::readCSV2();
+OrderBook::OrderBook(){
+    orders = CSVReader::readCSV();
 }
 /**return  vector of all know products in the dataset*/
 vector<string> OrderBook::getKnownProducts(){
@@ -23,19 +23,6 @@ vector<string> OrderBook::getKnownProducts(){
     return products;
 }
 /**return vector of Orders according to the sent filters*/
-vector<OrderBookEntry> OrderBook::getOrders(OrderBookType type, string product, string timestamp){
-
-    vector<OrderBookEntry> orders_sub;
-    
-    for(OrderBookEntry& e : orders){
-        if(e.orderType == type && e.product == product && e.timestamp == timestamp){
-            orders_sub.push_back(e);
-        }
-    }
-    
-    return orders_sub;
-}
-
 vector<OrderBookEntry> OrderBook::getOrdersCurrentTime(string timestamp){
 
     vector<OrderBookEntry> orders_sub;

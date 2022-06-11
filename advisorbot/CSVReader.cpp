@@ -9,7 +9,7 @@ CSVReader::CSVReader(){
     
 }
 
-vector<OrderBookEntry> CSVReader::readCSV2(){
+vector<OrderBookEntry> CSVReader::readCSV(){
     vector<OrderBookEntry> entries;
     string line;
     char data_line[128];
