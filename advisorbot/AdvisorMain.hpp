@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "OrderBook.hpp"
+#include "Validation.hpp"
 
 using namespace std;
 
@@ -36,10 +37,14 @@ class AdvisorMain{
         double avgPrice;
         double predHighPrice;
         double spreadPrice;
+        vector<string> prod;
     
         vector<OrderBookEntry> entries;
     
         OrderBook orderBook{};
+    
+        Validation val{};
+        
 };
 
 #endif /* AdvisorMain_hpp */

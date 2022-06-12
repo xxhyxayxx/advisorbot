@@ -91,3 +91,13 @@ double OrderBook::getSpread(double askPrice, double bidPrice) {
 
     return spread;
 }
+
+double OrderBook::getPredict(vector<double>& list, int num){
+    double predValue = list[0];
+    
+    for(int i = 0; i < list.size(); i++){
+        predValue =  predValue + (2.0 / (num + 1.0) * (list[i+1.0] - predValue));
+    };
+    
+    return predValue;
+}
