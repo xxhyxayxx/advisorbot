@@ -39,7 +39,6 @@ class AdvisorMain{
     
         vector<OrderBookEntry> entries;
     
-        //OrderBook orderBook{"/Users/nakamurahigeri/Documents/advisorbot/advisorbot/test.csv"};
         OrderBook orderBook{};
 };
 

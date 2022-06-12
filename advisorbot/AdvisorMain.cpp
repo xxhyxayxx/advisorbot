@@ -11,7 +11,7 @@ AdvisorMain::AdvisorMain(){
 void AdvisorMain::init(){
     string input;
     currentTime = orderBook.getEarliestTime(); //return orders[0].timestamp
-    entries = orderBook.getOrdersCurrentTime(currentTime);
+    entries = orderBook.getOrdersCurrentTime(currentTime); //get the curennt time orderBookEntry data
     
     
     while(true){
@@ -32,7 +32,7 @@ void AdvisorMain::printHelp(){
     string helpInput;
     helpInput = getUserOption();
     
-    vector<string> tokens = CSVReader::tokenise(helpInput, ' ');
+    vector<string> tokens = CSVReader::tokenise(helpInput, ' '); //split the words from the user input
     
     
     if(helpInput == "help avg"){
@@ -73,14 +73,15 @@ void AdvisorMain::printMin(){
     string input;
     getline(cin, input);
     
-    vector<string> tokens = CSVReader::tokenise(input, ' ');
+    vector<string> tokens = CSVReader::tokenise(input, ' '); //split the words from the user input
     
     
-    
+    //validate
     if(tokens.size() == 3 && tokens[0] == "min" && valProd(tokens[1]) && valType(tokens[2])){
         
         vector<double> priceList;
         
+        //only the price data is extracted and stored in vector
         for(OrderBookEntry& e : entries){
             if(e.orderType == OrderBookEntry::stringToOrderBookType(tokens[2]) && e.product == tokens[1]){
                 priceList.push_back(e.price);
@@ -89,7 +90,6 @@ void AdvisorMain::printMin(){
         
         lowPrice = OrderBook::getLowPrice(priceList);
         cout << "The min " << tokens[2] << " for " << tokens[1] << " is " << fixed << setprecision(8) << lowPrice << endl;
-
     }else{
         cout << "Bad Input" << endl;
     }
@@ -100,11 +100,13 @@ void AdvisorMain::printMax(){
     string input;
     getline(cin, input);
     
-    vector<string> tokens = CSVReader::tokenise(input, ' ');
+    vector<string> tokens = CSVReader::tokenise(input, ' '); //split the words from the user input
     
+    //validate
     if(tokens.size() == 3 && tokens[0] == "max" && valProd(tokens[1]) && valType(tokens[2])){
         vector<double> priceList;
         
+        //only the price data is extracted and stored in vector
         for(OrderBookEntry& e : entries){
             if(e.orderType == OrderBookEntry::stringToOrderBookType(tokens[2]) && e.product == tokens[1]){
                 priceList.push_back(e.price);
@@ -124,8 +126,9 @@ void AdvisorMain::printAvg(){
     string input;
     getline(cin, input);
     
-    vector<string> tokens = CSVReader::tokenise(input, ' ');
+    vector<string> tokens = CSVReader::tokenise(input, ' '); //split the words from the user input
     
+    //validate
     if(tokens.size() == 4 && tokens[0] == "avg" && valProd(tokens[1]) && valType(tokens[2]) && isNumber(tokens[3])){
         
         vector<double> list;
@@ -134,7 +137,7 @@ void AdvisorMain::printAvg(){
         string timestamp = currentTime;
         
         for(int i = 1; i <= stoi(tokens[3]); i++){
-            orders = orderBook.getOrdersCurrentTime(currentTime);
+            orders = orderBook.getOrdersCurrentTime(timestamp);
             for(OrderBookEntry& e : orders){
                 if(e.orderType == OrderBookEntry::stringToOrderBookType(tokens[2]) && e.product == tokens[1]){
                     list.push_back(e.price);
@@ -143,6 +146,10 @@ void AdvisorMain::printAvg(){
             timestamp = orderBook.getNextTime(timestamp);
         }
 
+        for(double& e : list){
+            cout << e << endl;
+        }
+        cout << list.size() << endl;
         avgPrice = OrderBook::getAvg(list);
         
         cout << "The average " << tokens[1] << " " << tokens[2] << " price over the last " << tokens[3] << " timesteps was " << fixed << setprecision(8) << avgPrice << endl;
@@ -157,7 +164,7 @@ void AdvisorMain::printTime(){
 
 void AdvisorMain::printStep(){
     currentTime = orderBook.getNextTime(currentTime);
-    entries = orderBook.getOrdersCurrentTime(currentTime);
+    entries = orderBook.getOrdersCurrentTime(currentTime); //update the curennt time orderBookEntry data
     cout << "now at " << currentTime << endl;
 }
 
@@ -166,17 +173,19 @@ void AdvisorMain::printPredict(){
     string input;
     getline(cin, input);
     
-    vector<string> tokens = CSVReader::tokenise(input, ' ');
+    vector<string> tokens = CSVReader::tokenise(input, ' '); //split the words from the user input
     
     vector<double> list;
     vector<double> avgList;
-    int num = 3;
+    int num = 5;
     string time = currentTime;
     vector<OrderBookEntry> orders;
+    double predValue;
     
-    
+    //validate
     if(tokens.size() == 4 && tokens[0] == "predict" && (tokens[1] == "min" || tokens[1] == "max") && valProd(tokens[2]) && valType(tokens[3])){
-        for (int i = 0; i < num; i++) {
+        //Extract the relevant data and obtain the highest or lowest price
+        for (int i = 1; i <= num; i++) {
             orders = orderBook.getOrdersCurrentTime(time);
             for(OrderBookEntry& e : orders){
                 if(e.orderType == OrderBookEntry::stringToOrderBookType(tokens[3]) && e.product == tokens[2]){
@@ -188,11 +197,16 @@ void AdvisorMain::printPredict(){
             }else if(tokens[1] == "min"){
                 avgList.push_back(OrderBook::getLowPrice(list));
             }
+            list.clear();
             time = orderBook.getNextTime(time);
-            //cout << list[i] << endl;
         };
         
-        double predValue = orderBook.getAvg(list);
+        //EMA - An exponential smooth moving average is an exponentially weighted average that is closer to the most recent closing price.
+        predValue = avgList[0];
+        
+        for(int i = 0; i < avgList.size(); i++){
+            predValue =  predValue + (2.0 / (num + 1.0) * (avgList[i+1.0] - predValue));
+        };
 
         cout << "The predict " << tokens[1] << " " << tokens[2] << " " << tokens[3] << " is " << predValue << endl;
     }else{
@@ -207,6 +221,7 @@ void AdvisorMain::printSpread(){
     
     vector<string> tokens = CSVReader::tokenise(input, ' ');
     
+    //validate
     if(tokens.size() == 2 && tokens[0] == "spread" && valProd(tokens[1])){
         vector<double> entriesAsk;
         vector<double> entriesBid;
@@ -220,6 +235,7 @@ void AdvisorMain::printSpread(){
             }
         }
         
+        //show as percentage
         spreadPrice = orderBook.getSpread(OrderBook::getLowPrice(entriesAsk), OrderBook::getHighPrice(entriesBid)) * 100;
         
         cout << "The spread " << tokens[1]  << " is " << spreadPrice << "% " << endl;

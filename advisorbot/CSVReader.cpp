@@ -12,8 +12,7 @@ CSVReader::CSVReader(){
 vector<OrderBookEntry> CSVReader::readCSV(){
     vector<OrderBookEntry> entries;
     string line;
-    char data_line[128];
-    //4.49
+    char data_line[128]; //make buffer in advance
 
     //"/Users/nakamurahigeri/Downloads/20200601.csv"
     //"/Users/nakamurahigeri/Documents/advisorbot/advisorbot/test.csv"
